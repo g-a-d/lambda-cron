@@ -40,11 +40,11 @@ function flip_cloudwatch(callback, crontab) {
 function execute_lambdas(callback, crontab) {
     var d = new Date().setSeconds(0);
     d.setMilliseconds(0);
-    for (job in crontab) {
-            console.log("job is",crontab[job]);
-            console.log("schedule is",crontab[job]["schedule"]);
+    async.each(crontab['jobs'], function(job,iteratorcallback) { 
+            console.log("job is",job);
+            console.log("schedule is",job["schedule"]);
             var options = {currentDate: d};
-            var interval = parser.parseExpression(crontab[job]["schedule"],options);
+            var interval = parser.parseExpression(job["schedule"],options);
             var runtime = interval.next();
             // coerce both d and runtime into a string with seconds
             datestring = JSON.stringify(d);
@@ -52,19 +52,22 @@ function execute_lambdas(callback, crontab) {
             if (datestring == runtimestring) {
                         var lambda = new AWS.Lambda();
                         var params = {
-                                FunctionName: crontab[job]["function"],
+                                FunctionName: job["function"],
                                 InvocationType: "Event",
-                                Payload: crontab[job]["args"]
+                                Payload: job["args"]
                         };
                         lambda.invoke(params, function(err,data) {
-                                 if (err) console.log(err, err.stack);
-                                 else console.log(data);
+                                 if (err) iteratorcallback(err);
+                                 else iteratorcallback(null);
                         });
             }
             else {
                     console.log("Not running job as not scheduled for it");
             }
-    }
+    }, function(err) {
+            if (err) callback(err);
+            else callback(null);
+    });
    
 
 
