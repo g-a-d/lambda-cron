@@ -68,11 +68,6 @@ function execute_lambdas(callback, crontab) {
             if (err) callback(err);
             else callback(null);
     });
-   
-
-
-
-
 }
 
 
@@ -83,7 +78,7 @@ exports.handler = function(event, context) {
      read_crontab;
      flip_cloudwatch;
      execute_lambdas;
-  ]);
-
-
+  ], function (err) {
+           if (err) context.fail(err);
+           else context.succeed(); });
 };
