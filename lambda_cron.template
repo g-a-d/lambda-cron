@@ -1,0 +1,36 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09", 
+    "Description": "Deploys a lambda_cron instance per https://github.com/blah", 
+    "Parameters": {
+        "LambdaCronARN": {
+            "Description": "ARN of the lambda_cron function", 
+            "Type": "String"
+        }
+    }, 
+    "Resources": {
+        "lambda_cron_alarm": {
+            "Properties": {
+                "ActionsEnabled": "True", 
+                "AlarmActions": [ { "Ref": "lambda_cron_sns" } ], 
+                "AlarmDescription": "Alarm that triggers the lambda_cron lambda function", 
+                "AlarmName": "lambda_cron_alarm", 
+                "ComparisonOperator": "LessThanThreshold", 
+                "EvaluationPeriods": "1", 
+                "MetricName": "lambda_cron", 
+                "Namespace": "lambda_cron", 
+                "OKActions": [ { "Ref": "lambda_cron_sns" } ], 
+                "Period": "60", 
+                "Statistic": "Average", 
+                "Threshold": "0.5"
+            }, 
+            "Type": "AWS::CloudWatch::Alarm"
+        }, 
+        "lambda_cron_sns": {
+            "Properties": {
+                "DisplayName": "lambda_cron_sns", 
+                "Subscription": [ { "Endpoint": {"Ref": "LambdaCronARN"}, "Protocol": "lambda" } ]
+            }, 
+            "Type": "AWS::SNS::Topic"
+        }
+    }
+}
