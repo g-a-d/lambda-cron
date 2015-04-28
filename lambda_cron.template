@@ -1,33 +1,34 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09", 
-    "Description": "Deploys a lambda_cron instance per https://github.com/blah", 
+    "Description": "Deploys a lambda-cron instance per https://github.com/blah", 
     "Parameters": {
         "LambdaCronARN": {
-            "Description": "ARN of the lambda_cron function", 
+            "Description": "ARN of the lambda-cron function", 
             "Type": "String"
         }
     }, 
     "Resources": {
-        "lambda_cron_alarm": {
+        "LambdaCronAlarm": {
             "Properties": {
                 "ActionsEnabled": "True", 
-                "AlarmActions": [ { "Ref": "lambda_cron_sns" } ], 
-                "AlarmDescription": "Alarm that triggers the lambda_cron lambda function", 
-                "AlarmName": "lambda_cron_alarm", 
-                "ComparisonOperator": "LessThanThreshold", 
+                "AlarmActions": [ { "Ref": "LambdaCronSns" } ], 
+                "InsufficientDataActions": [ { "Ref": "LambdaCronSns" } ], 
+                "AlarmDescription": "Alarm that triggers the lambda-cron lambda function", 
+                "AlarmName": "LambdaCronAlarm", 
+                "ComparisonOperator": "GreaterThanThreshold", 
                 "EvaluationPeriods": "1", 
-                "MetricName": "lambda_cron", 
-                "Namespace": "lambda_cron", 
-                "OKActions": [ { "Ref": "lambda_cron_sns" } ], 
+                "MetricName": "LambdaCron", 
+                "Namespace": "LambdaCron", 
+                "OKActions": [ { "Ref": "LambdaCronSns" } ], 
                 "Period": "60", 
                 "Statistic": "Average", 
                 "Threshold": "0.5"
             }, 
             "Type": "AWS::CloudWatch::Alarm"
         }, 
-        "lambda_cron_sns": {
+        "LambdaCronSns": {
             "Properties": {
-                "DisplayName": "lambda_cron_sns", 
+                "DisplayName": "LambdaCronSns", 
                 "Subscription": [ { "Endpoint": {"Ref": "LambdaCronARN"}, "Protocol": "lambda" } ]
             }, 
             "Type": "AWS::SNS::Topic"

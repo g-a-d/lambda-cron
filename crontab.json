@@ -1,0 +1,13 @@
+{
+  "jobs": [ {
+    "schedule": "*/3 * * * *",
+    "function": "testfunction",
+    "args": {
+      "key1": "test1",
+      "key3": "test3",
+      "key2": "test2"
+    }
+  } ]
+}
+
+    
