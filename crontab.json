@@ -7,7 +7,21 @@
       "key3": "test3",
       "key2": "test2"
     }
-  } ]
+  },
+  {
+    "schedule": "*/5 * * * *",
+    "function": "testfunction",
+    "args": {
+      "key1": "test5",
+      "key3": "test5",
+      "key2": "test5"
+    }
+  }
+  
+  
+  
+  
+  ]
 }
 
     

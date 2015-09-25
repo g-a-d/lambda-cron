@@ -72,11 +72,9 @@ function execute_lambdas(crontab, callback ) {
 }
 
 
-
 exports.handler = function(event, context) {
-
   async.waterfall([
-                  function (callback) { flip_cloudwatch(event,callback); },
+     function (callback) { flip_cloudwatch(event,callback); },
      read_crontab,
      execute_lambdas
   ], function (err) {
