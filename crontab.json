@@ -1,11 +1,10 @@
 {
   "jobs": [ {
-    "schedule": "*/3 * * * *",
-    "function": "testfunction",
+    "schedule": "* * * * *",
+    "function": "put_to_bucket",
     "args": {
-      "key1": "test1",
-      "key3": "test3",
-      "key2": "test2"
+      "bucket": "lambdacrondemo",
+      "key": "index.html"
     }
   },
   {
