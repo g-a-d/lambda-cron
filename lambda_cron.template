@@ -101,14 +101,9 @@
             "Type": "AWS::IAM::Role"
         }, 
         "LambdaCronSns": {
+         "DependsOn": "LambdaCronInvokePermission",
             "Properties": {
-                "DisplayName": "LambdaCronSns", 
-                "Subscription": [
-                    {
-                        "Endpoint": { "Fn::GetAtt": [ "LambdaCronFunction", "Arn" ] },
-                        "Protocol": "lambda"
-                    }
-                ]
+                "DisplayName": "LambdaCronSns"
             }, 
             "Type": "AWS::SNS::Topic"
         }
