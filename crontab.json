@@ -1,25 +1,12 @@
 {
   "jobs": [ {
     "schedule": "* * * * *",
-    "function": "put_to_bucket",
+    "function": "put_clock_in_s3",
     "args": {
       "bucket": "lambdacrondemo",
       "key": "index.html"
     }
-  },
-  {
-    "schedule": "*/5 * * * *",
-    "function": "testfunction",
-    "args": {
-      "key1": "test5",
-      "key3": "test5",
-      "key2": "test5"
-    }
   }
-  
-  
-  
-  
   ]
 }
 
