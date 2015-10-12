@@ -1,5 +1,11 @@
 # lambda cron #
 
+** NOTE ** Amazon have now announced _native_ scheduled functions for Lambda. You are very much advised to use those as opposed to this!
+
+https://aws.amazon.com/blogs/aws/aws-lambda-update-python-vpc-increased-function-duration-scheduling-and-more/
+
+
+
 ## Introduction ##
 
 At present, AWS Lambda has no way of setting up a scheduled invokation of a function. The 'lambda cron' project attempts to fill this gap until such time that AWS releases a task scheduler of their own.
